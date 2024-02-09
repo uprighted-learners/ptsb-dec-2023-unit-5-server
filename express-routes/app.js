@@ -1,11 +1,12 @@
 /* 
     ? How to start a new Express project
     * make a new directory, cd into it
+    * `touch app.js` to make a new file
     * run `npm init -y` to initialize npm project with default values
-    * change package.json "main" to app.js (or whatever we named our js file)
-    * add a "start" script: 'node app.js'
-    * add a "dev" script: 'nodemon'
     * `npm install express`
+    * change package.json "main" to app.js (or whatever we named our js file)
+    * add a "start" script: 'node app.js' (or whatever we named our js file)
+    * add a "dev" script: 'nodemon'
     * if it's a git project, add a .gitignore file
         * node_modules
 */
