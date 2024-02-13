@@ -5,7 +5,12 @@ const app = express()
 const PORT = 4000
 const bookPath = __dirname + "/static/books.json"
 
+// middleware that allows us to interpret request bodies as JSON
+app.use(express.json())
+
 app.get('/books', (req, res) => {
+    // send an entire file as the response
+    // in this case, our JSON database file
     res.sendFile(bookPath)
 })
 
@@ -31,7 +36,6 @@ app.get('/books/:bookId', (req, res) => {
     }
 })
 
-app.use(express.json())
 app.post('/books/add', (req, res) => {
     // HTTP POST is for sending information from client to server
 
@@ -48,7 +52,7 @@ app.post('/books/add', (req, res) => {
     res.send("new book successfully added")
 })
 
-app.put('/books/update', (req, res) => {
+app.put('/books/update/:bookId', (req, res) => {
     // HTTP POST is also for sending information from client to server
     // PUT requests should be idempotent
     // idempotency means that performing the operation repeatedly
@@ -61,7 +65,7 @@ app.put('/books/update', (req, res) => {
     const parsedData = JSON.parse(data)
     // check whether the data in the request body already exists
     // in this case, we'll look for a matching id
-    const foundBook = parsedData.books.filter(b => b.id == req.body.id)
+    const foundBook = parsedData.books.filter(b => b.id == req.params.bookId)
 
     if (foundBook.length === 0) {
         // add the new entry
