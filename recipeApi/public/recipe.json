@@ -1,0 +1,25 @@
+{
+    "recipes": [
+        {
+            "id": 1,
+            "title": "Arroz con Pollo",
+            "author": "Frans",
+            "ingredients": [
+                "rice",
+                "chicken",
+                "sofritto"
+            ]
+        },
+        {
+            "id": 2,
+            "title": "Fried tofu with rice",
+            "author": "Danny",
+            "ingredients": [
+                "tofu",
+                "corn starch",
+                "sauce",
+                "rice"
+            ]
+        }
+    ]
+}
