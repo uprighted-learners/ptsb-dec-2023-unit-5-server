@@ -17,11 +17,11 @@ const writeFile = (path, data) => {
 }
 
 // Read
-router.get('/', (req, res) => {
+router.get('/all', (req, res) => {
     res.sendFile(recipePath)
 })
 
-// Read
+// Read (get by id)
 router.get('/:id', (req, res) => {
     // get all recipes as JS object
     const allRecipes = readFile(recipePath)
@@ -30,6 +30,15 @@ router.get('/:id', (req, res) => {
 
     // TODO: add error handling for missing recipes
     res.send(recipe)
+})
+
+// Read (search by ingredient)
+router.get('/ingredient/:ingredient', (req, res) => {
+    const allRecipes = readFile(recipePath)
+    const selection = allRecipes.recipes.filter(r => {
+        return r.ingredients.includes(req.params.ingredient)
+    })
+    res.json(selection)
 })
 
 // Create
@@ -45,7 +54,6 @@ router.post('/add', (req, res) => {
     res.send(`successfully added ${req.body.title}`)
 })
 
-
 // Update
 router.put('/update/:id', (req, res) => {
     const allRecipes = readFile(recipePath)
@@ -55,6 +63,9 @@ router.put('/update/:id', (req, res) => {
     // merge data from request with existing recipe
     const newRecipe = Object.assign(recipe, req.body)
 
+    console.log(req.body)
+    console.log(newRecipe);
+
     // replace updated recipe
     const index = allRecipes.recipes.indexOf(recipe)
     if (index !== -1) {
@@ -62,12 +73,24 @@ router.put('/update/:id', (req, res) => {
     }
 
     writeFile(recipePath, allRecipes)
-    res.send(`successfully updated ${req.body.title}`)
+    res.send(`successfully updated ${newRecipe.title}`)
 })
 
+// Delete
+router.delete('/delete/:id', (req, res) => {
+    const allRecipes = readFile(recipePath)
+    const recipe = allRecipes.recipes.find(r => r.id == req.params.id)
 
+    // find the index of the recipe, remove it from the array
+    const index = allRecipes.recipes.indexOf(recipe)
+    if (index !== -1) {
+        allRecipes.recipes.splice(index, 1)
+    }
 
-// TODO: Delete
+    writeFile(recipePath, allRecipes)
+    res.send(`successfully deleted ${req.body.title}`)
+})
+
 
 // TODO: add a front end! 
 

@@ -1,0 +1,14 @@
+#recipes {
+    display: flex;
+    gap: 1em;
+    flex-wrap: wrap;
+    margin-top: 2em;
+    align-items: flex-start;
+}
+
+.card {
+    background-color: #859db7;
+    padding: 1em;
+    border: 2px solid black;
+    border-radius: 2%;
+}
