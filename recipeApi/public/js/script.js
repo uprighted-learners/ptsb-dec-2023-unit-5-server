@@ -11,6 +11,7 @@ const searchIngredients = async (ingredient) => {
     await fetch(`http://localhost:4000/ingredient/${ingredient}`)
         .then(res => res.json())
         .then(data => data.forEach(r => createCard(r)))
+    // TODO: add error handling for no results
 }
 
 const createCard = (recipe) => {
@@ -20,8 +21,11 @@ const createCard = (recipe) => {
     const title = document.createElement('h3')
     title.innerText = recipe.title
 
-    const rating = document.createElement('h5')
-    rating.innerText = `rating: ${recipe.rating}`
+    const rating = document.createElement('span')
+    if (recipe.rating) {
+        const rateNum = Number(recipe.rating)
+        const _ = [...Array(rateNum)].forEach(() => rating.innerText += "⭐")
+    }
 
     card.addEventListener('click', e => {
         expandCard(card, recipe)
